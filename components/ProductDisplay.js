@@ -2,9 +2,10 @@ app.component('product-display', {
   props: {
     premium: {
       type: Boolean,
-      require: true,
+      required: true,
     }
   },
+  emits: ['add-to-cart', 'remove-to-cart'],
   template:
     /* html */
     `<div class="product-display">
@@ -31,7 +32,10 @@ app.component('product-display', {
             <button @click="removeFromCart" class="button">Remove</button>
           </div>
         </div>
-        </div>`,
+        </div>
+        <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+        <review-form @review-submitted="addReview"></review-form>
+        `,
   data() {
     return {
       product: 'Socks',
@@ -42,7 +46,8 @@ app.component('product-display', {
         { id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 50 },
         { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0 },
       ],
-      onSale: false
+      onSale: false,
+      reviews: []
     }
   },
   methods: {
@@ -54,6 +59,9 @@ app.component('product-display', {
     },
     removeFromCart() {
       this.$emit('remove-to-cart', this.variants[this.selectedVariant].id)
+    },
+    addReview(review) {
+      this.reviews.push(review);
     }
   },
   computed: {
