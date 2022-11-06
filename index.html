@@ -15,9 +15,10 @@
     <div class="container">
       <nav class="nav-bar"></nav>
 
-      <div class="cart">Cart ({{ cart }})</div>
+      <div class="cart">Cart ({{ cart.length }})</div>
 
-      <product-display :premium="premium"></product-display>
+      <product-display :premium="premium" @add-to-cart="updateCart" @remove-to-cart="removeToCart">
+      </product-display>
     </div>
 
   </div>
